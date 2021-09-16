@@ -1,0 +1,28 @@
+html, #root {
+  background-color: #343a40;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.link {
+  color: #1a5cc0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 100ms ease;
+}
+
+.link:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
+.link:active {
+  color: #0db1fd;
+}
