@@ -2,7 +2,7 @@
 
 This is an app for share your data in your local network, whose facilitates the shares data between the devices.
 
-> The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to de shared space.
+> The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to the shared space.
 
 > All of the files uploaded and the folder created are in the `uploads/` directory.
 
