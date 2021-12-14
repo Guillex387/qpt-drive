@@ -2,7 +2,7 @@
 
 This is an app for share your data in your local network, whose facilitates the shares data between the devices.
 
-> The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to de shared space.
+> The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to the shared space.
 
 > All of the files uploaded and the folder created are in the `uploads/` directory.
 
@@ -144,4 +144,8 @@ I make the frontend using [react](https://reactjs.org) and [boostrap](https://ge
 
 ## License
 
+<<<<<<< HEAD
 Licensed under the [GNU AGPLv3](https://github.com/Guillex387/qpt-drive/blob/master/LICENSE). Copyright 2021 Guillex387
+=======
+*Open source software*
+>>>>>>> dadbdb91c956af4d7166689f16177592a3922156
