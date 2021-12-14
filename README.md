@@ -144,4 +144,4 @@ I make the frontend using [react](https://reactjs.org) and [boostrap](https://ge
 
 ## License
 
-*Open source software*
+Licensed under the [GNU AGPLv3](https://github.com/Guillex387/qpt-drive/blob/master/LICENSE). Copyright 2021 Guillex387
