@@ -8,7 +8,7 @@ This is an application to share your data on your local network, which makes it 
 
 ## Executables
 
-You can download the portable app for [windows](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.0/qpt-drive-win32-x64-v1.0.0.zip) and [linux](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.0/qpt-drive-linux-x64-v1.0.0.zip) **last version**.
+You can download the portable app for [windows](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.1/qpt-drive-win32-x64-v1.0.1.zip) and [linux](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.1/qpt-drive-linux-x64-v1.0.1.zip) **last version**.
 
 > In linux for execute this, you need the executable permission, this command only needs to be used once:
 >

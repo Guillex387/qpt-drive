@@ -5,7 +5,7 @@ import File from '../components/File';
 import Folder from '../components/Folder';
 import PathNav from '../components/PathNav';
 import FolderMaker from '../components/FolderMaker';
-import { UploadIcon, AddFolderIcon } from '../icons/icons';
+import { UploadIcon, AddFolderIcon, ReloadIcon } from '../icons/icons';
 
 interface DriveProps {
   token: string;
@@ -116,6 +116,9 @@ const Drive: FC<DriveProps> = props => {
         </button>
         <button onClick={() => setVisible(true)} className="btn btn-secondary ms-2">
           <AddFolderIcon />
+        </button>
+        <button onClick={() => (getWorkFolderContent())} className='btn btn-dark ms-2'>
+          <ReloadIcon />
         </button>
       </div>
       <hr style={{ color: 'whitesmoke' }} />

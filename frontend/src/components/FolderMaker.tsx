@@ -12,6 +12,11 @@ interface FolderMakerProps {
 const FolderMaker: FC<FolderMakerProps> = props => {
   const [inputValue, setInputVal] = useState('');
 
+  const escape = () => {
+    props.onEsc && props.onEsc();
+    setInputVal('');
+  };
+
   const onInput = (ev: any) => setInputVal(ev.target.value);
   const onEnter = (ev: KeyEvent) => {
     if (ev.key == 'Enter') {
@@ -20,10 +25,8 @@ const FolderMaker: FC<FolderMakerProps> = props => {
     }
   };
   const onEscape = (ev: KeyEvent) => {
-    if (ev.key == 'Escape') {
-      props.onEsc && props.onEsc();
-      setInputVal('');
-    }
+    if (ev.key == 'Escape')
+      escape();
   };
 
   return (
@@ -34,17 +37,24 @@ const FolderMaker: FC<FolderMakerProps> = props => {
             <FolderIcon fill="white" />
             <div className="ms-2 text-white">
               <input style={{
-                backgroundColor: 'transparent',
-                borderColor: 'white',
-                borderStyle: 'solid',
-                borderWidth: 1,
-                outline: 'none',
-                padding: 0,
-                paddingLeft: 2,
-                paddingRight: 2,
-                margin: 0,
-                color: 'white'
-              }} type="text" value={inputValue} onKeyUp={onEscape} onKeyPress={onEnter} onInput={onInput} autoFocus />
+                  backgroundColor: 'transparent',
+                  borderColor: 'white',
+                  borderStyle: 'solid',
+                  borderWidth: 1,
+                  outline: 'none',
+                  padding: 0,
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                  margin: 0,
+                  color: 'white'
+                }}
+                type="text"
+                value={inputValue}
+                onKeyUp={onEscape}
+                onKeyPress={onEnter}
+                onInput={onInput}
+                onBlur={escape}
+                autoFocus />
             </div>
           </div>
           :
