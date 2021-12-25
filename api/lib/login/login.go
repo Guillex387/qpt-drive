@@ -23,14 +23,14 @@ const layout = time.RFC1123
 
 func GenerateToken(date time.Time) string {
 	timeStr := date.Format(layout)
-	hash := sha256.Sum256([]byte(timeStr + serverKey()))
+	hash := sha256.Sum256([]byte(timeStr + ServerKey()))
 	usrToken := append(hash[:], []byte(timeStr)...)
 	hexStr := hex.EncodeToString(usrToken)
 	return hexStr
 }
 
 func VerifyKey(key string) bool {
-	return key == serverKey()
+	return key == ServerKey()
 }
 
 func VerifyToken(usrToken string) int {
@@ -51,8 +51,27 @@ func VerifyToken(usrToken string) int {
 	return 0
 }
 
-func InitKey() {
-	serverKey()
+func ServerKey() string {
+	defaultKey := generateKey()
+	exec, _ := os.Executable()
+	execDir := filepath.Dir(exec)
+	keyFile := filepath.Join(execDir, "server.key")
+	_, fileInfo := os.Stat(keyFile)
+	if os.IsNotExist(fileInfo) {
+		return SetServerKey(defaultKey)
+	}
+	bytes, _ := ioutil.ReadFile(keyFile)
+	return string(bytes)
+}
+
+func SetServerKey(key string) string {
+	exec, _ := os.Executable()
+	execDir := filepath.Dir(exec)
+	keyFile := filepath.Join(execDir, "server.key")
+	file, _ := os.Create(keyFile)
+	file.WriteString(key)
+	file.Close()
+	return key
 }
 
 // Private
@@ -69,20 +88,4 @@ func generateKey() string {
 		randPass += string(seed[randCharI])
 	}
 	return randPass
-}
-
-func serverKey() string {
-	defaultKey := generateKey()
-	exec, _ := os.Executable()
-	execDir := filepath.Dir(exec)
-	keyFile := filepath.Join(execDir, "server.key")
-	_, fileInfo := os.Stat(keyFile)
-	if os.IsNotExist(fileInfo) {
-		file, _ := os.Create(keyFile)
-		file.WriteString(defaultKey)
-		file.Close()
-		return defaultKey
-	}
-	bytes, _ := ioutil.ReadFile(keyFile)
-	return string(bytes)
 }

@@ -1,6 +1,6 @@
 # qpt-drive
 
-This is an app for share your data in your local network, whose facilitates the shares data between the devices.
+This is an application to share your data on your local network, which makes it easy to transfer data between devices.
 
 > The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to the shared space.
 
@@ -10,13 +10,13 @@ This is an app for share your data in your local network, whose facilitates the 
 
 You can download the portable app for [windows](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.0/qpt-drive-win32-x64-v1.0.0.zip) and [linux](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.0/qpt-drive-linux-x64-v1.0.0.zip) **last version**.
 
-> In linux for execute this, you need the executable permission, this command only needs to be used once.
+> In linux for execute this, you need the executable permission, this command only needs to be used once:
 >
 > `$ chmod +x ./drive`
 >
-> And then you can use the app.
+> And then you can use the app:
 >
-> `$ ./drive $PORT`, the port is optional (default 8000).
+> `$ ./drive --help`
 
 ## API *docs*:
 

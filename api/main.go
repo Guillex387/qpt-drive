@@ -3,23 +3,25 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
-	utils "qpt-drive-api/lib"
-	"qpt-drive-api/lib/drive"
-	"qpt-drive-api/lib/login"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
+
+	utils "qpt-drive-api/lib"
+	"qpt-drive-api/lib/drive"
+	"qpt-drive-api/lib/login"
 )
 
-const Expiration = time.Hour * 16
-const DefaultPort = 8000
+const EXPIRATION = time.Hour * 16
+const DEFAULT_PORT = 8000
 
 // Handlers
 
@@ -162,7 +164,7 @@ func GetTokenHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(401)
 		w.Write(response)
 	} else {
-		usrToken := login.GenerateToken(time.Now().Add(Expiration))
+		usrToken := login.GenerateToken(time.Now().Add(EXPIRATION))
 		response, _ := json.Marshal(TokenResponse{Err: 0, Token: usrToken})
 		w.Write(response)
 	}
@@ -186,36 +188,13 @@ func Auth(next func(http.ResponseWriter, *http.Request)) http.Handler {
 
 // Utils funcs
 
-func runServer(handler http.Handler, port int) {
-	portStr := ":" + strconv.Itoa(port)
-	localIps := utils.GetLocalIpAddrs()
-	fmt.Printf("Server running in:\n")
-	for _, localIp := range localIps {
-		fmt.Printf("http://%v%v %v\n", localIp.Ip, portStr, localIp.Device)
-	}
-	err := http.ListenAndServe(portStr, handler)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Server failed to start in port %v\n", port)
-		os.Exit(1)
-	}
-}
-
 func spaDir() string {
 	exec, _ := os.Executable()
 	return filepath.Join(filepath.Dir(exec), "app")
 }
 
-func serverPort() int {
-	if len(os.Args) > 1 {
-		num, err := strconv.Atoi(os.Args[1])
-		if err == nil {
-			return num
-		}
-	}
-	return DefaultPort
-}
-
-func main() {
+func Server(port int, serverKeyParam string) {
+	// Preparing routes
 	router := mux.NewRouter()
 	filesRouter := router.PathPrefix("/api").Subrouter()
 	filesRouter.HandleFunc("/token/{pass}", GetTokenHandler).Methods("GET")
@@ -224,6 +203,34 @@ func main() {
 	filesRouter.Handle("/{token}/rename", Auth(RenameHandler)).Methods("PUT")
 	filesRouter.PathPrefix("/{token}/path").Handler(Auth(FilesHandler)).Methods("GET", "DELETE")
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(spaDir()))).Methods("GET")
-	login.InitKey()
-	runServer(cors.AllowAll().Handler(router), serverPort())
+	var serverKey string
+	if serverKeyParam == "" {
+		serverKey = login.ServerKey()
+	} else {
+		serverKey = login.SetServerKey(serverKeyParam)
+	}
+	// Running http server
+	portStr := ":" + strconv.Itoa(port)
+	localIps := utils.GetLocalIpAddrs()
+	fmt.Printf("Server running in:\n")
+	for _, localIp := range localIps {
+		fmt.Printf("http://%v%v %v\n", localIp.Ip, portStr, localIp.Device)
+	}
+	fmt.Printf("Server key: %v\n", serverKey)
+	err := http.ListenAndServe(portStr, cors.AllowAll().Handler(router))
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Server failed to start in port %v\n", port)
+		os.Exit(1)
+	}
+}
+
+// Main function
+
+func main() {
+	var port int
+	var serverKey string
+	flag.IntVar(&port, "port", DEFAULT_PORT, "Indicates the http port of the server")
+	flag.StringVar(&serverKey, "setkey", "", "Indicates the password for access to the server")
+	flag.Parse()
+	Server(port, serverKey)
 }
