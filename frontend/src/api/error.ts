@@ -6,7 +6,8 @@ const errorMsgs = [
   'Invalid token',
   'Expired token',
   'Invalid server key',
-  'The item hasn\'t a valid name'
+  'The item hasn\'t a valid name',
+  'Error creating the file/folder'
 ];
 
 export function errorMsg(code: number, extra: string = ''): string {

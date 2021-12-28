@@ -15,6 +15,7 @@ import (
 		1 the item doesn't exists
 		2 the item already exists
 		7 the item hasn't a valid name
+		8 error creating the file or folder
 */
 
 func UploadFile(path string, content []byte, override bool) int {
@@ -31,7 +32,10 @@ func UploadFile(path string, content []byte, override bool) int {
 	if exists && !override {
 		return 2
 	}
-	file, _ := os.Create(absPath)
+	file, err := os.Create(absPath)
+	if err != nil {
+		return 8
+	}
 	file.Write(content)
 	file.Close()
 	return 0
@@ -47,7 +51,10 @@ func Mkdir(path string) int {
 	if os.IsExist(dirErr) {
 		return 2
 	}
-	os.Mkdir(dirPath, os.ModeDir)
+	err := os.Mkdir(dirPath, os.ModeDir)
+	if err != nil {
+		return 8
+	}
 	return 0
 }
 
