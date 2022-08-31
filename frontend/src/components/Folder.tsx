@@ -47,7 +47,13 @@ const Folder: FC<FolderProps> = props => {
             width: window.screen.width <= 576 ? '6em' : 'auto',
             margin: 0,
             color: 'white'
-          }} type="text" value={inputValue} onKeyUp={onEscape} onKeyPress={onEnter} onInput={onInput} disabled={disabled} />
+          }}
+          type="text"
+          value={inputValue}
+          onKeyUp={onEscape}
+          onKeyPress={onEnter}
+          onInput={onInput}
+          disabled={disabled} />
         </div>
         <div className="ms-auto d-flex flex-column flex-md-row">
           <div onClick={() => {

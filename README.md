@@ -2,6 +2,10 @@
 
 This is an application to share your data on your local network, which makes it easy to transfer data between devices.
 
+- chrome :heavy_check_mark:
+- brave :heavy_check_mark:
+- firefox :warning:
+
 > The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to the shared space.
 
 > All of the files uploaded and the folder created are in the `uploads/` directory.
@@ -18,9 +22,10 @@ You can download the portable app for [windows](https://github.com/Guillex387/qp
 >
 > `$ ./drive --help`
 
-## API *docs*:
+## API _docs_:
 
 > ### Error codes:
+>
 > - None error **0**
 > - Item not found **1**
 > - Item already exists **2**
@@ -32,106 +37,118 @@ You can download the portable app for [windows](https://github.com/Guillex387/qp
 
 - Token **GET** `/api/token/:pass`
 
-    This route is use for obtain the token, for access to server. The pass variable is the server key in base64.
-    
-    The response:
-    ```json
-    {
-      "error": 0,
-      "token": "some token"
-    }
-    ```
+  This route is use for obtain the token, for access to server. The pass variable is the server key in base64.
+
+  The response:
+
+  ```json
+  {
+    "error": 0,
+    "token": "some token"
+  }
+  ```
 
 - Files & Folders **GET** `/api/:token/path/...`
 
-    Put the path of the file or folder in the end of the url, this will return:
-    If is a file will return a `blob`.
-    Else will return a json which represent the content of the same, following this model:
-    ```json
-    {
-      "originPath": "the/container/folder",
-      "childs": [
-        {
-          "type": "file",
-          "name": "some_file.txt",
-          "size": 56
-        },
-        {
-          "type": "folder",
-          "name": "some_folder",
-          "size": 0
-        }
-      ]
-    }
-    ```
-    If some errors happenss:
-    ```json
-    {
-      "error": 2
-    }
-    ```
+  Put the path of the file or folder in the end of the url, this will return:
+  If is a file will return a `blob`.
+  Else will return a json which represent the content of the same, following this model:
+
+  ```json
+  {
+    "originPath": "the/container/folder",
+    "childs": [
+      {
+        "type": "file",
+        "name": "some_file.txt",
+        "size": 56
+      },
+      {
+        "type": "folder",
+        "name": "some_folder",
+        "size": 0
+      }
+    ]
+  }
+  ```
+
+  If some errors happenss:
+
+  ```json
+  {
+    "error": 2
+  }
+  ```
 
 - Files & Folders **DELETE** `/api/:token/path/...`
 
-    This route is for delete some file or folder. Put the path of the file or folder in the end of the url.
+  This route is for delete some file or folder. Put the path of the file or folder in the end of the url.
 
-    The response:
-    ```json
-    {
-      "error": 0
-    }
-    ```
+  The response:
+
+  ```json
+  {
+    "error": 0
+  }
+  ```
 
 - Upload **POST & PUT** `/api/:token/upload`
 
-    This url is for upload a single file, if is **PUT** req they will override the file if this exists, if is **POST** req and the file already exists a error will happenss.
+  This url is for upload a single file, if is **PUT** req they will override the file if this exists, if is **POST** req and the file already exists a error will happenss.
 
-    Request body model is a form data body following this model:
-    | Param | Type |
-    | --- | ----------- |
-    | path | `string` |
-    | file | `File` |
+  Request body model is a form data body following this model:
+  | Param | Type |
+  | --- | ----------- |
+  | path | `string` |
+  | file | `File` |
 
-    The response:
-    ```json
-    {
-      "error": 0
-    }
-    ```
+  The response:
+
+  ```json
+  {
+    "error": 0
+  }
+  ```
 
 - Make dir **POST** `/api/:token/mkdir`
 
-    This url is for make a new directory.
-    Use this model for the req body:
-    ```json
-    {
-      "path": "container/newFolder"
-    }
-    ```
-    The response:
-    ```json
-    {
-      "error": 0
-    }
-    ```
+  This url is for make a new directory.
+  Use this model for the req body:
+
+  ```json
+  {
+    "path": "container/newFolder"
+  }
+  ```
+
+  The response:
+
+  ```json
+  {
+    "error": 0
+  }
+  ```
 
 - Rename **PUT** `/api/:token/rename`
 
-    This route is for rename files or folders.
+  This route is for rename files or folders.
 
-    Req body:
-    ```json
-    {
-      "path": "parent/child.png",
-      "newName": "new name.png"
-    }
-    ```
-    The response:
-    ```json
-    {
-      "error": 0
-    }
-    ```
+  Req body:
+
+  ```json
+  {
+    "path": "parent/child.png",
+    "newName": "new name.png"
+  }
+  ```
+
+  The response:
+
+  ```json
+  {
+    "error": 0
+  }
+  ```
 
 ## Frontend
 
@@ -140,7 +157,6 @@ I make the frontend using [react](https://reactjs.org) and [boostrap](https://ge
 > **Resources**
 >
 > All icons in the app are provided by [boostrap icons](https://icons.getbootstrap.com) in `.svg` format.
-
 
 ## License
 
