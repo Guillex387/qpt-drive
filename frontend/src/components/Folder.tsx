@@ -32,9 +32,11 @@ const Folder: FC<FolderProps> = props => {
 
   return (
     <div className="rounded bg-dark m-1 px-3 py-2 d-flex">
-      <FolderIcon fill="white" />
+      <div onDoubleClick={() => disabled && props.onOpen && props.onOpen(props.name, props.originPath)} className="d-flex justify-content-center align-items-center">
+        <FolderIcon fill="white" />
+      </div>
       <div className="d-flex align-items-center w-100">
-        <div onClick={() => disabled && props.onOpen && props.onOpen(props.name, props.originPath)} className="ms-2 text-white">
+        <div className="ms-2 text-white">
           <input style={{
             backgroundColor: 'transparent',
             borderColor: disabled ? 'transparent' : 'white',
@@ -46,14 +48,16 @@ const Folder: FC<FolderProps> = props => {
             paddingRight: 2,
             width: window.screen.width <= 576 ? '6em' : 'auto',
             margin: 0,
-            color: 'white'
+            color: 'white',
+            userSelect: 'none'
           }}
           type="text"
           value={inputValue}
           onKeyUp={onEscape}
           onKeyPress={onEnter}
           onInput={onInput}
-          disabled={disabled} />
+          disabled={disabled}
+          />
         </div>
         <div className="ms-auto d-flex flex-column flex-md-row">
           <div onClick={() => {

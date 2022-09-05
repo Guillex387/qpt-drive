@@ -211,11 +211,15 @@ func Server(port int, serverKeyParam string) {
 	}
 	// Running http server
 	portStr := ":" + strconv.Itoa(port)
-	localIps := utils.GetLocalIpAddrs()
+	localIp := utils.GetLocalIp()
 	fmt.Printf("Server running in:\n")
-	for _, localIp := range localIps {
-		fmt.Printf("http://%v%v %v\n", localIp.Ip, portStr, localIp.Device)
+	// for _, localIp := range localIps {
+	// 	fmt.Printf("http://%v%v %v\n", localIp.Ip, portStr, localIp.Device)
+	// }
+	if localIp != "" {
+		fmt.Printf("http://%v%v External Link\n", localIp, portStr)
 	}
+	fmt.Printf("http://127.0.0.1%v Internal Link\n", portStr)
 	fmt.Printf("Server key: %v\n", serverKey)
 	err := http.ListenAndServe(portStr, cors.AllowAll().Handler(router))
 	if err != nil {

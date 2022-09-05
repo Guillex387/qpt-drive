@@ -2,50 +2,27 @@ package utils
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
-	"runtime"
-	"strings"
 )
 
 // Local network
 
-type LocalIp struct {
-	Device string
-	Ip     string
-}
-
-func GetLocalIpAddrs() []LocalIp {
-	interfaces, _ := net.Interfaces()
-	var localIps []LocalIp
-	wlanName := "wlan0"
-	etherName := "eth0"
-	ipv4Index := 0
-	if runtime.GOOS == "windows" {
-		wlanName = "Wi-Fi"
-		etherName = "Ethernet"
-		ipv4Index = 1
+func GetLocalIp() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		return ""
 	}
-	for _, inter := range interfaces {
-		if inter.Name == etherName {
-			addrs, _ := inter.Addrs()
-			ip := strings.Split(addrs[ipv4Index].String(), "/")[0]
-			localIps = append(localIps, LocalIp{Device: "Ethernet", Ip: ip})
-		}
-		if inter.Name == wlanName {
-			addrs, _ := inter.Addrs()
-			ip := strings.Split(addrs[ipv4Index].String(), "/")[0]
-			localIps = append(localIps, LocalIp{Device: "Wi-Fi", Ip: ip})
-		}
-	}
-	return localIps
+	defer conn.Close()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP.String()
 }
 
 // API utils
 
 func ReadBody(r *http.Request, obj interface{}) error {
-	bytes, err := ioutil.ReadAll(r.Body)
+	bytes, err := io.ReadAll(r.Body)
 	if err != nil {
 		return err
 	}

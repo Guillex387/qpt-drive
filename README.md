@@ -2,9 +2,11 @@
 
 This is an application to share your data on your local network, which makes it easy to transfer data between devices.
 
-- chrome :heavy_check_mark:
-- brave :heavy_check_mark:
-- firefox :warning:
+| Browser | Tested             |
+| ------- | ------------------ |
+| Chrome  | :heavy_check_mark: |
+| Brave   | :heavy_check_mark: |
+| Firefox | :heavy_check_mark: |
 
 > The shared space is protected with a login system, next to the executable has a file called `server.key` which contains the password for access to the shared space.
 
@@ -12,15 +14,15 @@ This is an application to share your data on your local network, which makes it 
 
 ## Executables
 
-You can download the portable app for [windows](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.1/qpt-drive-win32-x64-v1.0.1.zip) and [linux](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.1/qpt-drive-linux-x64-v1.0.1.zip) **last version**.
+You can download the portable app for [windows](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.2/qpt-drive-windows-amd64-v1.0.2.zip) and [linux](https://github.com/Guillex387/qpt-drive/releases/download/v1.0.2/qpt-drive-linux-amd64-v1.0.2.zip) **last version**.
 
 > In linux for execute this, you need the executable permission, this command only needs to be used once:
 >
-> `$ chmod +x ./drive`
+> `$ sudo chmod +x ./drive`
 >
 > And then you can use the app:
 >
-> `$ ./drive --help`
+> `$ sudo ./drive --help`
 
 ## API _docs_:
 
